@@ -1,0 +1,91 @@
+<?php
+
+function cipher_menu() {
+    $items = array();
+    $items['cipher_value'] = array(
+      'title' => 'Switch Cipher',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('cipher_form'),
+      'access callback' =>TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['word_success'] = array(
+      'title' => 'Switch Cipher',
+      'page callback' => 'encryption_success',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+function cipher_form() {
+  $form['value_input'] = array(
+    '#title' => 'Shift Input',
+    '#type' => 'textfield',
+    '#description' => t('Shift value'),
+    '#element_validate' => array('element_validate_number'),
+    '#required' => TRUE,
+  );
+
+  $form['direction_input'] = array(
+    '#title' => 'Direction Input',
+    '#type' => 'textfield',
+    '#description' => t('Direction value'),
+    // add element
+  );
+
+  $form['phrase_input'] = array(
+    '#title' => 'Phrase Input',
+    '#type' => 'textfield',
+    '#description' => t('Enter a phrase'),
+    // add element
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Go',
+  );
+
+  return $form;
+
+}
+
+function cipher_form_submit($form, &$form_state) {
+    $value = $form_state['values']['value_input'];
+    $direction = $form_state['values']['direction_input'];
+    $phrase = $form_state['values']['phrase_input'];
+
+    $new_phrase = array();
+
+
+    //array of alphabets
+    $alphabet= array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+
+
+    //look at the letters in the phrase
+    $array_phrase = str_split($phrase);
+
+
+    for($i=0; $i < strlen($array_phrase); $i++) {
+        for ($j=0; $j < strlen($alphabet); $j++) {
+            if(($array_phrase[$i] == $alphabet[$j]) && ($direction == "right")) {
+                  $new_phrase = array_push($alphabet[$j +$value]);
+            }
+            elseif(($array_phrase[$i] == $alphabet[$j]) && ($direction == "left")) {
+                $new_phrase = array_push($alphabet[$j -$value]);
+            }
+            else {
+              $new_phrase = "Invalid, please try again.";
+            }
+
+        }
+
+    $_SESSION['new_phrase_output'] = $newphrase_output;
+    $form_state['redirect'] = 'word_success';
+    }
+
+function encryption_success() {
+    return $_SESSION['new_phrase_output'];
+    }

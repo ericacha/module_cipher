@@ -1,0 +1,5 @@
+name = Shift Cipher
+description = Displays the encryption from what the user enters.
+package  = Epicodus Examples
+core = 7.x
+files[] = cipher.module
