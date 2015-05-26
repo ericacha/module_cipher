@@ -68,8 +68,8 @@ function cipher_form_submit($form, &$form_state) {
     $array_phrase = str_split($phrase);
 
 
-    for($i=0; $i < strlen($array_phrase); $i++) {
-        for ($j=0; $j < strlen($alphabet); $j++) {
+    for($i=0; $i < count($array_phrase); $i++) {
+        for ($j=0; $j < count($alphabet); $j++) {
             if(($array_phrase[$i] == $alphabet[$j]) && ($direction == "right")) {
                   $new_phrase = array_push($alphabet[$j +$value]);
             }
