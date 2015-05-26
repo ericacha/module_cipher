@@ -57,7 +57,7 @@ function cipher_form_submit($form, &$form_state) {
     $direction = $form_state['values']['direction_input'];
     $phrase = $form_state['values']['phrase_input'];
 
-    $new_phrase = array();
+    $new_phrase_array= array();
 
 
     //array of alphabets
@@ -67,7 +67,6 @@ function cipher_form_submit($form, &$form_state) {
     //look at the letters in the phrase
     $array_phrase = str_split($phrase);
 
-
     for($i=0; $i < count($array_phrase); $i++) {
         for ($j=0; $j < count($alphabet); $j++) {
             if(($array_phrase[$i] == $alphabet[$j]) && ($direction == "right")) {
@@ -76,19 +75,21 @@ function cipher_form_submit($form, &$form_state) {
             elseif(($array_phrase[$i] == $alphabet[$j]) && ($direction == "left")) {
 
             array_push($new_phrase,$alphabet[$j -$value]);
-                // $new_phrase = array_push($alphabet[$j -$value]);
+                // $new_phrase_array= array_push($alphabet[$j -$value]);
             }
             else {
-              $new_phrase = "Invalid, please try again.";
+              $new_phrase_array= "Invalid, please try again.";
             }
 
         }
-
-    $_SESSION['new_phrase_output'] = $newphrase_output;
-    $form_state['redirect'] = 'word_success';
     }
+
+    $new_phrase = implode(" ", $new_phrase_array);
+
+    $_SESSION['new_phrase_output'] = $new_phrase;
+    $form_state['redirect'] = 'word_success';
+}
 
 function encryption_success() {
     return $_SESSION['new_phrase_output'];
     }
-}
