@@ -89,3 +89,4 @@ function cipher_form_submit($form, &$form_state) {
 function encryption_success() {
     return $_SESSION['new_phrase_output'];
     }
+}
