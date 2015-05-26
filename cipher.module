@@ -71,10 +71,12 @@ function cipher_form_submit($form, &$form_state) {
     for($i=0; $i < count($array_phrase); $i++) {
         for ($j=0; $j < count($alphabet); $j++) {
             if(($array_phrase[$i] == $alphabet[$j]) && ($direction == "right")) {
-                  $new_phrase = array_push($alphabet[$j +$value]);
+              array_push($new_phrase,$alphabet[$j +$value]);
             }
             elseif(($array_phrase[$i] == $alphabet[$j]) && ($direction == "left")) {
-                $new_phrase = array_push($alphabet[$j -$value]);
+
+            array_push($new_phrase,$alphabet[$j -$value]);
+                // $new_phrase = array_push($alphabet[$j -$value]);
             }
             else {
               $new_phrase = "Invalid, please try again.";
